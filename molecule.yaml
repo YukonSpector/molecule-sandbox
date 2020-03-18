@@ -1,6 +1,5 @@
 ---
 - hosts: all
-  gather_facts: no
   become: true
   vars:
     ubuntu_packages:
@@ -10,8 +9,8 @@
       - docker.io
     pip_packages:
       - ansible
-      - molecule
-      - molecule[docker]
+      - molecule == 2.22
+      - docker
     enable_services:
       - docker
 
@@ -21,7 +20,7 @@
         name: preflight
 
   tasks:
-    - name: Name for git module.
+    - name: config | Download code from forked repo.
       git:
         repo: "https://github.com/YukonSpector/ansible-frr"
         dest: "~/ansible-frr"
