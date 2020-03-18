@@ -1,0 +1,36 @@
+---
+#preflight role default tasks main.yaml file
+
+# check to make sure the host is up and ansible is able to run.
+- name: test | ping.
+  ping:
+   data: "pong"
+
+# Update apt-cache to ensure up to date
+- name: update | Apt Cache.
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  become: true
+
+# Install pre-reqs for Ansible install
+- name: install | OS Ansible Pre-Reqs.
+  apt:
+    name: "{{ ubuntu_packages }}"
+    state: present
+  become: true
+
+#enable and start services.
+- name: config | services
+  service:
+    enabled: "yes"
+    name: "{{ item }}"
+    state: "started"
+  with_items: "{{ enable_services }}"
+
+# Install packages for python via pip.
+- name: install | pip packages.
+  pip:
+    name: "{{ pip_packages }}"
+    state: present
+  become: true

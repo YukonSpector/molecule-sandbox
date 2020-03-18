@@ -1,0 +1,28 @@
+---
+- hosts: all
+  gather_facts: no
+  become: true
+  vars:
+    ubuntu_packages:
+      - python
+      - python-pip
+      - git
+      - docker.io
+    pip_packages:
+      - ansible
+      - molecule
+      - molecule[docker]
+    enable_services:
+      - docker
+
+  pre_tasks:
+    - name: prepare host
+      include_role:
+        name: preflight
+
+  tasks:
+    - name: Name for git module.
+      git:
+        repo: "https://github.com/YukonSpector/ansible-frr"
+        dest: "~/ansible-frr"
+      become: false
