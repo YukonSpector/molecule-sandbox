@@ -1,8 +1,8 @@
 DOMAIN=".molecule.local"
 BOX="ubuntu/bionic64"
-RAM = "512"
-CPU_COUNT = "1"
-CPU_CAP = "50"
+RAM = "4096"
+CPU_COUNT = "2"
+CPU_CAP = "100"
 
 servers=[
   {
